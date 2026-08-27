@@ -123,13 +123,15 @@ In modern software development and cloud operations, developers and users face s
 ```
 
 ### Mathematical Formulation for Outdoor Fitness Score:
-$$	ext{Score} = \max\left(1.0, \, \min\left(10.0, \, 10.0 - P_{	ext{temp}} - P_{	ext{rain}} - P_{	ext{humidity}} - P_{	ext{UV}} - P_{	ext{wind}}ight)ight)$$
+$$\text{Score} = \max\left(1.0, \, \min\left(10.0, \, 10.0 - P_{\text{temp}} - P_{\text{rain}} - P_{\text{humidity}} - P_{\text{UV}} - P_{\text{wind}}
+\right)
+\right)$$
 
-* **$P_{	ext{temp}}$:** Penalties for extreme heat ($>30^\circ	ext{C}$) or cold ($<15^\circ	ext{C}$).
-* **$P_{	ext{rain}}$:** Penalties for precipitation probabilities ($>20\%$).
-* **$P_{	ext{humidity}}$:** Penalties for suffocating humidity ($>70\%$).
-* **$P_{	ext{UV}}$:** Penalties for hazardous ultraviolet radiation ($\ge 6$).
-* **$P_{	ext{wind}}$:** Penalties for gale-force winds ($>25	ext{ km/h}$).
+* **$P_{\text{temp}}$:** Penalties for extreme heat ($>30^\circ\text{C}$) or cold ($<15^\circ\text{C}$).
+* **$P_{\text{rain}}$:** Penalties for precipitation probabilities ($>20\%$).
+* **$P_{\text{humidity}}$:** Penalties for suffocating humidity ($>70\%$).
+* **$P_{\text{UV}}$:** Penalties for hazardous ultraviolet radiation ($\ge 6$).
+* **$P_{\text{wind}}$:** Penalties for gale-force winds ($>25 \text{km/h}$).
 
 ---
 

@@ -83,34 +83,34 @@ Standard large language models (LLMs) suffer from **knowledge cutoff limitations
 
 ### 4.1 Rain & Umbrella Advisory Engine
 The agent evaluates the probability of precipitation (`chanceofrain` %) and precipitation volume (`precipMM`) from the hourly forecast array:
-* **$	ext{Rain Probability} \ge 50\%$ or Rain/Drizzle keywords**: `Required (High likelihood of precipitation)`
-* **$25\% \le 	ext{Rain Probability} < 50\%$**: `Recommended (Partly overcast / light drizzle possible)`
-* **$	ext{Rain Probability} < 25\%$**: `Not Needed (Dry & clear conditions expected)`
+* **$\text{Rain Probability} \ge 50\%$ or Rain/Drizzle keywords**: `Required (High likelihood of precipitation)`
+* **$25\% \le \text{Rain Probability} < 50\%$**: `Recommended (Partly overcast / light drizzle possible)`
+* **$\text{Rain Probability} < 25\%$**: `Not Needed (Dry & clear conditions expected)`
 
 ### 4.2 Outdoor Fitness & Commute Feasibility Algorithm
 The agent computes an explainable **Outdoor Fitness Score** (range: 1.0 to 10.0) using a multi-factor penalty function:
 
-$$	ext{Score} = 10.0 - P_{	ext{temp}} - P_{	ext{rain}} - P_{	ext{humidity}} - P_{	ext{UV}} - P_{	ext{wind}}$$
+$$\text{Score} = 10.0 - P_{\text{temp}} - P_{\text{rain}} - P_{\text{humidity}} - P_{\text{UV}} - P_{\text{wind}}$$
 
-* **Temperature Penalty ($P_{	ext{temp}}$):**
-  * $T > 35^\circ	ext{C} \implies -3.5$
-  * $30^\circ	ext{C} < T \le 35^\circ	ext{C} \implies -2.0$
-  * $T < 10^\circ	ext{C} \implies -2.5$
-  * $10^\circ	ext{C} \le T < 15^\circ	ext{C} \implies -1.0$
-  * $15^\circ	ext{C} \le T \le 26^\circ	ext{C} \implies 0.0$ *(Optimal)*
-* **Rain Penalty ($P_{	ext{rain}}$):**
-  * $	ext{Rain} > 70\% \implies -4.0$
-  * $40\% < 	ext{Rain} \le 70\% \implies -2.5$
-  * $20\% < 	ext{Rain} \le 40\% \implies -1.0$
-* **Humidity Penalty ($P_{	ext{humidity}}$):**
+* **Temperature Penalty ($P_{\text{temp}}$):**
+  * $T > 35^\circ\text{C} \implies -3.5$
+  * $30^\circ\text{C} < T \le 35^\circ\text{C} \implies -2.0$
+  * $T < 10^\circ\text{C} \implies -2.5$
+  * $10^\circ\text{C} \le T < 15^\circ\text{C} \implies -1.0$
+  * $15^\circ\text{C} \le T \le 26^\circ\text{C} \implies 0.0$ *(Optimal)*
+* **Rain Penalty ($P_{\text{rain}}$):**
+  * $\text{Rain} > 70\% \implies -4.0$
+  * $40\% < \text{Rain} \le 70\% \implies -2.5$
+  * $20\% < \text{Rain} \le 40\% \implies -1.0$
+* **Humidity Penalty ($P_{\text{humidity}}$):**
   * $H > 85\% \implies -2.0$
   * $70\% < H \le 85\% \implies -1.0$
-* **UV Penalty ($P_{	ext{UV}}$):**
-  * $	ext{UV} \ge 8 \implies -1.5$
-  * $6 \le 	ext{UV} < 8 \implies -0.5$
-* **Wind Penalty ($P_{	ext{wind}}$):**
-  * $W > 35	ext{ km/h} \implies -2.0$
-  * $25	ext{ km/h} < W \le 35	ext{ km/h} \implies -1.0$
+* **UV Penalty ($P_{\text{UV}}$):**
+  * $\text{UV} \ge 8 \implies -1.5$
+  * $6 \le \text{UV} < 8 \implies -0.5$
+* **Wind Penalty ($P_{\text{wind}}$):**
+  * $W > 35 \text{km/h} \implies -2.0$
+  * $25 \text{km/h} < W \le 35 \text{km/h} \implies -1.0$
 
 **Classification Output:**
 * **$\ge 8.0$:** *Excellent (Ideal for outdoor running, cycling & sports)*
