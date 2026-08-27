@@ -1,0 +1,6 @@
+# Local Private Files & Virtual Environments
+VERSHA_MASTERY_GUIDE.md
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
