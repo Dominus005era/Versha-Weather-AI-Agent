@@ -8,7 +8,7 @@ Includes Smart Umbrella Alerts, Outdoor Fitness Scoring, and Multi-City Comparis
 import os
 import sys
 import re
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List
 from src.tools import fetch_weather_data, format_weather_report, format_city_comparison
 
 SYSTEM_PROMPT = """
@@ -104,10 +104,7 @@ class WeatherAIAgent:
             telemetry2 = fetch_weather_data(city2)
             comparison_text = format_city_comparison(telemetry1, telemetry2)
 
-            versha_response = (
-                f"Hello! Here is the comparative atmospheric analysis between {city1.title()} and {city2.title()}:\n\n"
-                f"{comparison_text}"
-            )
+            versha_response = f"Hello! Here is the comparative atmospheric analysis between {city1.title()} and {city2.title()}:\n\n{comparison_text}"
 
             return {
                 "agent": self.agent_name,
@@ -128,10 +125,7 @@ class WeatherAIAgent:
         raw_telemetry = fetch_weather_data(city)
         formatted_summary = format_weather_report(raw_telemetry)
 
-        versha_response = (
-            f"Hello! Here is the latest atmospheric update and environmental advisory I retrieved for you:\n\n"
-            f"{formatted_summary}"
-        )
+        versha_response = f"Hello! Here is the latest atmospheric update and environmental advisory I retrieved for you:\n\n{formatted_summary}"
 
         return {
             "agent": self.agent_name,

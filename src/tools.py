@@ -1,14 +1,14 @@
 """
 Real-Time Weather & Environmental Diagnostic Tool Suite
 Interfaces directly with free public APIs (wttr.in and WAQI).
-Includes Smart Umbrella Alerts, Outdoor Activity Scoring, and Multi-City Comparison.
+Includes Smart Umbrella Alerts, Outdoor Fitness Scoring, and Multi-City Comparison.
 """
 
 import json
 import urllib.request
 import urllib.parse
 import urllib.error
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, Tuple
 
 
 def calculate_outdoor_score(temp_c: float, humidity: float, rain_chance: float, uv_index: float, wind_kmph: float) -> Tuple[float, str]:
@@ -100,7 +100,6 @@ def fetch_weather_data(city: str = "Bengaluru") -> Dict[str, Any]:
         precip_mm_val = 0.0
         if hourly:
             try:
-                # Find current or next available hour
                 rain_chance_val = int(hourly[0].get("chanceofrain", "0"))
                 precip_mm_val = float(hourly[0].get("precipMM", "0.0"))
             except (ValueError, TypeError):
@@ -225,18 +224,19 @@ def format_weather_report(weather_data: Dict[str, Any]) -> str:
     outdoor_score = weather_data.get("outdoor_fitness_score", "N/A")
     outdoor_rec = weather_data.get("outdoor_recommendation", "N/A")
 
-    return (
-        f"Atmospheric Report for {city}, {country}:\\n"
-        f"  * Condition     : {desc}\\n"
-        f"  * Temperature   : {temp} (Feels like {feels})\\n"
-        f"  * Humidity      : {hum}\\n"
-        f"  * Wind Speed    : {wind}\\n"
-        f"  * UV Index      : {uv}\\n"
-        f"  * Solar Cycle   : Sunrise at {sunrise} | Sunset at {sunset}\\n"
-        f"  * Rain Forecast : {rain_chance} chance of precipitation\\n"
-        f"  * Umbrella Alert: {umbrella}\\n"
+    lines = [
+        f"Atmospheric Report for {city}, {country}:",
+        f"  * Condition     : {desc}",
+        f"  * Temperature   : {temp} (Feels like {feels})",
+        f"  * Humidity      : {hum}",
+        f"  * Wind Speed    : {wind}",
+        f"  * UV Index      : {uv}",
+        f"  * Solar Cycle   : Sunrise at {sunrise} | Sunset at {sunset}",
+        f"  * Rain Forecast : {rain_chance} chance of precipitation",
+        f"  * Umbrella Alert: {umbrella}",
         f"  * Outdoor Score : {outdoor_score} - {outdoor_rec}"
-    )
+    ]
+    return "\n".join(lines)
 
 
 def format_city_comparison(city1_data: Dict[str, Any], city2_data: Dict[str, Any]) -> str:
@@ -245,19 +245,24 @@ def format_city_comparison(city1_data: Dict[str, Any], city2_data: Dict[str, Any
     """
     c1 = city1_data.get("city", "City 1")
     c2 = city2_data.get("city", "City 2")
+    
+    umb1 = "Required" if city1_data.get("umbrella_required") else "Not Needed"
+    umb2 = "Required" if city2_data.get("umbrella_required") else "Not Needed"
 
-    return (
-        f"Location Comparison: {c1.upper()} vs. {c2.upper()}\\n\\n"
-        f"+------------------------+--------------------------+--------------------------+\\n"
-        f"| Metric                 | {c1[:24]:<24} | {c2[:24]:<24} |\\n"
-        f"+------------------------+--------------------------+--------------------------+\\n"
-        f"| Temperature            | {city1_data.get('temp_C', 'N/A'):<24} | {city2_data.get('temp_C', 'N/A'):<24} |\\n"
-        f"| Feels Like             | {city1_data.get('feels_like_C', 'N/A'):<24} | {city2_data.get('feels_like_C', 'N/A'):<24} |\\n"
-        f"| Weather Condition      | {city1_data.get('weather_desc', 'N/A')[:24]:<24} | {city2_data.get('weather_desc', 'N/A')[:24]:<24} |\\n"
-        f"| Humidity               | {city1_data.get('humidity', 'N/A'):<24} | {city2_data.get('humidity', 'N/A'):<24} |\\n"
-        f"| Wind Speed             | {city1_data.get('wind_speed_kmph', 'N/A'):<24} | {city2_data.get('wind_speed_kmph', 'N/A'):<24} |\\n"
-        f"| Rain Probability       | {city1_data.get('rain_chance_percent', '0%'):<24} | {city2_data.get('rain_chance_percent', '0%'):<24} |\\n"
-        f"| Outdoor Score          | {city1_data.get('outdoor_fitness_score', 'N/A'):<24} | {city2_data.get('outdoor_fitness_score', 'N/A'):<24} |\\n"
-        f"| Umbrella Advisory      | {('Required' if city1_data.get('umbrella_required') else 'Not Needed'):<24} | {('Required' if city2_data.get('umbrella_required') else 'Not Needed'):<24} |\\n"
-        f"+------------------------+--------------------------+--------------------------+\\n"
-    )
+    table_lines = [
+        f"Location Comparison: {c1.upper()} vs. {c2.upper()}",
+        "",
+        "+------------------------+--------------------------+--------------------------+",
+        f"| Metric                 | {c1[:24]:<24} | {c2[:24]:<24} |",
+        "+------------------------+--------------------------+--------------------------+",
+        f"| Temperature            | {city1_data.get('temp_C', 'N/A'):<24} | {city2_data.get('temp_C', 'N/A'):<24} |",
+        f"| Feels Like             | {city1_data.get('feels_like_C', 'N/A'):<24} | {city2_data.get('feels_like_C', 'N/A'):<24} |",
+        f"| Weather Condition      | {city1_data.get('weather_desc', 'N/A')[:24]:<24} | {city2_data.get('weather_desc', 'N/A')[:24]:<24} |",
+        f"| Humidity               | {city1_data.get('humidity', 'N/A'):<24} | {city2_data.get('humidity', 'N/A'):<24} |",
+        f"| Wind Speed             | {city1_data.get('wind_speed_kmph', 'N/A'):<24} | {city2_data.get('wind_speed_kmph', 'N/A'):<24} |",
+        f"| Rain Probability       | {city1_data.get('rain_chance_percent', '0%'):<24} | {city2_data.get('rain_chance_percent', '0%'):<24} |",
+        f"| Outdoor Score          | {city1_data.get('outdoor_fitness_score', 'N/A'):<24} | {city2_data.get('outdoor_fitness_score', 'N/A'):<24} |",
+        f"| Umbrella Advisory      | {umb1:<24} | {umb2:<24} |",
+        "+------------------------+--------------------------+--------------------------+"
+    ]
+    return "\n".join(table_lines)
