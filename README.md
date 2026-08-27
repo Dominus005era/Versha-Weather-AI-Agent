@@ -123,9 +123,7 @@ In modern software development and cloud operations, developers and users face s
 ```
 
 ### Mathematical Formulation for Outdoor Fitness Score:
-$$\text{Score} = \max\left(1.0, \, \min\left(10.0, \, 10.0 - P_{\text{temp}} - P_{\text{rain}} - P_{\text{humidity}} - P_{\text{UV}} - P_{\text{wind}}
-\right)
-\right)$$
+$$\text{Score} = \max(1.0, \, \min(10.0, \, 10.0 - P_{\text{temp}} - P_{\text{rain}} - P_{\text{humidity}} - P_{\text{UV}} - P_{\text{wind}}))$$
 
 * **$P_{\text{temp}}$:** Penalties for extreme heat ($>30^\circ\text{C}$) or cold ($<15^\circ\text{C}$).
 * **$P_{\text{rain}}$:** Penalties for precipitation probabilities ($>20\%$).

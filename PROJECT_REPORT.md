@@ -90,7 +90,7 @@ The agent evaluates the probability of precipitation (`chanceofrain` %) and prec
 ### 4.2 Outdoor Fitness & Commute Feasibility Algorithm
 The agent computes an explainable **Outdoor Fitness Score** (range: 1.0 to 10.0) using a multi-factor penalty function:
 
-$$\text{Score} = 10.0 - P_{\text{temp}} - P_{\text{rain}} - P_{\text{humidity}} - P_{\text{UV}} - P_{\text{wind}}$$
+$$\text{Score} = \max(1.0, \, \min(10.0, \, 10.0 - P_{\text{temp}} - P_{\text{rain}} - P_{\text{humidity}} - P_{\text{UV}} - P_{\text{wind}}))$$
 
 * **Temperature Penalty ($P_{\text{temp}}$):**
   * $T > 35^\circ\text{C} \implies -3.5$
